@@ -21,7 +21,7 @@ public class PurchaseOrder {
 
     private String customerName;
 
-    @OneToMany(mappedBy = "purchaseOrder", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "purchaseOrder", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<PurchaseOrderLine> lines;
 
     private BigDecimal total;
