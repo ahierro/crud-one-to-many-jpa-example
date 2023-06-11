@@ -188,11 +188,12 @@ class PurchaseOrderServiceImplTest {
 
         var pageRequest = PageRequest.of(0, 10);
         var page = new PageImpl<>(List.of(newPurchaseOrder), pageRequest, 1);
-        when(repository.findAllByJpqlQuery(anyBoolean(), any(Pageable.class))).thenReturn(page);
+        when(repository.findByDeleted(anyBoolean(), any(Pageable.class))).thenReturn(page);
         when(conversionService.convert(any(PurchaseOrder.class), eq(PurchaseOrderDTO.class))).thenReturn(newPurchaseOrderDTO);
 
         var responseDTO = service.getPurchaseOrders(pageRequest);
 
         assertNotNull(responseDTO);
     }
+
 }

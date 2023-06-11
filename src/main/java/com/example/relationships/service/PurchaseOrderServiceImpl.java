@@ -56,7 +56,7 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
 
     @Override
     public PageResponseDTO<PurchaseOrderDTO> getPurchaseOrders(Pageable pageable) {
-        var userPage = purchaseOrderRepository.findAllByJpqlQuery(false,pageable);
+        var userPage = purchaseOrderRepository.findByDeleted(false,pageable);
         return new PageResponseDTO<>(
                 userPage.getContent().stream()
                         .map(user -> conversionService.convert(user, PurchaseOrderDTO.class)).toList()
