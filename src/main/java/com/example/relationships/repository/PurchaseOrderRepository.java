@@ -23,7 +23,6 @@ public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder, Lo
 
     Optional<PurchaseOrder> findByIdAndDeleted(Long id,Boolean deleted);
 
-
     @EntityGraph(attributePaths= {"lines"})
     Page<PurchaseOrder> findByDeleted(Boolean deleted,Pageable pageable);
 
