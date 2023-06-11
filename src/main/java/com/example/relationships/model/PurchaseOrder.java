@@ -26,7 +26,7 @@ public class PurchaseOrder {
 
     private BigDecimal total;
 
-    @Column(columnDefinition = "bit not null default 0")
-    private Boolean deleted;
+    @Column(nullable = false)
+    private Boolean deleted = false;
 
 }
