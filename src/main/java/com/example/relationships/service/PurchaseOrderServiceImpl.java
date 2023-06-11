@@ -1,5 +1,6 @@
 package com.example.relationships.service;
 
+import com.example.relationships.dto.PageResponseDTO;
 import com.example.relationships.dto.PurchaseOrderCreationDTO;
 import com.example.relationships.dto.PurchaseOrderDTO;
 import com.example.relationships.exceptions.BadRequest;
@@ -9,6 +10,8 @@ import com.example.relationships.repository.PurchaseOrderRepository;
 import jakarta.transaction.Transactional;
 import lombok.AllArgsConstructor;
 import org.springframework.core.convert.ConversionService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -40,6 +43,26 @@ public class PurchaseOrderServiceImpl implements PurchaseOrderService {
         if(number == 0){
             throw new NotFound();
         }
+    }
+
+    @Override
+    public PurchaseOrderDTO getById(Long idPurchaseOrder) {
+        var purchaseOrder = purchaseOrderRepository.findByIdAndDeleted(idPurchaseOrder,false);
+        if(purchaseOrder.isPresent()){
+            return conversionService.convert(purchaseOrder.get(),PurchaseOrderDTO.class);
+        }else{
+            throw new NotFound();
+        }
+    }
+
+    @Override
+    public PageResponseDTO<PurchaseOrderDTO> getPurchaseOrders(Pageable pageable) {
+        var userPage = purchaseOrderRepository.findByDeleted(false,pageable);
+        return new PageResponseDTO<>(
+                userPage.getContent().stream()
+                        .map(user -> conversionService.convert(user, PurchaseOrderDTO.class)).toList()
+                , userPage.getPageable()
+                , userPage.getTotalElements());
     }
 
     private PurchaseOrderDTO savePurchaseOrder(PurchaseOrder purchaseOrder) {

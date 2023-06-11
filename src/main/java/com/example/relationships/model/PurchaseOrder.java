@@ -2,8 +2,6 @@ package com.example.relationships.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.FilterDef;
-import org.hibernate.annotations.SQLDelete;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -24,7 +22,7 @@ public class PurchaseOrder {
 
     private String customerName;
 
-    @OneToMany(mappedBy = "purchaseOrder", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "purchaseOrder", cascade = CascadeType.ALL, orphanRemoval = true,fetch = FetchType.EAGER)
     private List<PurchaseOrderLine> lines;
 
     private BigDecimal total;
