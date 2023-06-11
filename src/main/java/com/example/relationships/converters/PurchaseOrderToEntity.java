@@ -30,6 +30,7 @@ public class PurchaseOrderToEntity implements Converter<PurchaseOrderDTO, Purcha
                 .id(source.getId())
                 .customerName(source.getCustomerName())
                 .total(source.getTotal())
+                .deleted(false)
                 .build();
     }
 }

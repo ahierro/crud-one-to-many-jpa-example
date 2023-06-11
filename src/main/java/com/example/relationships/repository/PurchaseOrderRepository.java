@@ -27,7 +27,7 @@ public interface PurchaseOrderRepository extends JpaRepository<PurchaseOrder, Lo
     @EntityGraph(attributePaths= {"lines"})
     Page<PurchaseOrder> findByDeleted(Boolean deleted,Pageable pageable);
 
-    @Query(value = "from PurchaseOrder po inner join fetch po.lines pol where po.deleted = :deleted",
+    @Query(value = "from PurchaseOrder po left join fetch po.lines pol where po.deleted = :deleted",
             countQuery =  "select count(po) from PurchaseOrder po where po.deleted = :deleted")
     Page<PurchaseOrder> findAllByJpqlQuery(@Param("deleted") Boolean deleted, Pageable pageable);
 }

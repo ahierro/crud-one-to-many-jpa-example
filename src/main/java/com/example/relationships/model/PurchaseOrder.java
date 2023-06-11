@@ -4,7 +4,6 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.List;
 
 @Entity
@@ -26,8 +25,6 @@ public class PurchaseOrder {
     private List<PurchaseOrderLine> lines;
 
     private BigDecimal total;
-
-    private LocalDate creationDate;
 
     @Column(columnDefinition = "bit not null default 0")
     private Boolean deleted;
